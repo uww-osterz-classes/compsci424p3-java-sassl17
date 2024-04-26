@@ -3,9 +3,9 @@
  * 
 
 I apologize, I don't want to make excuses for not being able to complete the assinment, I will 
-take whatever grade is coming to me. I have dumped too much of my time into another class because I 
-have a huge project in it and that has caused me to run out of time for this one.
- -Lucas Sass
+take whatever grade is coming to me. I already know it does not run because there are parts that I couldn't figure
+out how to do. I have dumped too much of my time into another class because I have a huge project in it and that has caused me to run out of time for this one.
+
  
  */
 
@@ -30,7 +30,7 @@ public class Program3 {
     private static int[] available;
     private static int[][] max;
     private static int[][] allocation;
-    private static int[][] need;
+    private static int[][] n;
 
     /**
      * @param args Command-line arguments. 
@@ -109,7 +109,7 @@ public class Program3 {
             available = new int[numResources];
             max = new int[numProcesses][numResources];
             allocation = new int[numProcesses][numResources];
-            need = new int[numProcesses][numResources];
+            n = new int[numProcesses][numResources];
 
             // 3. Use the rest of the setup file to initialize the
             // data structures
@@ -187,17 +187,17 @@ public class Program3 {
     }//end safeState
 private static boolean request(int p, int[] request){
     for(int i=0;i<request.length;i++){
-        if(request[i]> need[p][i] || request[i]>available[i]){
+        if(request[i]> n[p][i] || request[i]>available[i]){
         return false;}
         if(safeState()){
         for (int i = 0; i < request.length; i++) {
-            available[i] += request[i];           
+            available[i] += request[i];//adds the request to the available resources  
             allocation[p][i] -= request[i];  
-            need[p][i] += request[i];      
+            n[p][i] += request[i];      
             return false;//deny if not safe state
             }//end for
         }//end if
-    }//end for
+    }//end for1
     return true;
 }//end request
     private static void release(int p, int[] release){
@@ -208,14 +208,14 @@ private static boolean request(int p, int[] request){
     }//end for
         for(int i=0; i<release.length;i++){
          available[i]+=release[i];//release resources back to being available
-        allocation[p][i]-=release[i];//actually releases from size of i
+          
         }//end for
         System.out.println("Resources have been released");
     }//end release
 
 private static void manual(){
     Scanner sc= new Scanner(System.in);
-    boolean started=true;
+    boolean started=true;//to show that its running manually
     while(started==true){//while manual mode is called
         System.out.println("Use request, release, or end");
         String input=scanner.nextLine().trim();//gets user input and splits it into parts
