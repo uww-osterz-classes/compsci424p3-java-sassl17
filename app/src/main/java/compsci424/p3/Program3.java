@@ -30,7 +30,7 @@ public class Program3 {
     private static int[] available;
     private static int[][] max;
     private static int[][] allocation;
-    private static int[][] n;
+    
 
     /**
      * @param args Command-line arguments. 
@@ -109,7 +109,7 @@ public class Program3 {
             available = new int[numResources];
             max = new int[numProcesses][numResources];
             allocation = new int[numProcesses][numResources];
-            n = new int[numProcesses][numResources];
+           
 
             // 3. Use the rest of the setup file to initialize the
             // data structures
@@ -187,13 +187,12 @@ public class Program3 {
     }//end safeState
 private static boolean request(int p, int[] request){
     for(int i=0;i<request.length;i++){
-        if(request[i]> n[p][i] || request[i]>available[i]){
+        if(request[i]>available[i]){
         return false;}
         if(safeState()){
         for (int i = 0; i < request.length; i++) {
             available[i] += request[i];//adds the request to the available resources  
             allocation[p][i] -= request[i];  
-            n[p][i] += request[i];      
             return false;//deny if not safe state
             }//end for
         }//end if
